@@ -1,6 +1,7 @@
 class Image:
     pixels = None
     image_name = None
+    image_facit = None
 
     def __init__(self):
         self.pixels = []
