@@ -4,15 +4,9 @@ class ImageReader:
 
     images = []
 
-
-    def read_image(self,image_file):
-        x = 0
-        y = 0
-
-        file = open(image_file)
-        mat = []
+    def parse_image_file(self, image_file):
         image_index = -1
-        for line in file.readlines():
+        for line in open(image_file).readlines():
             if line.startswith('#') or len(line) <=1:
                 continue
             if line.startswith("Image"):
@@ -21,7 +15,6 @@ class ImageReader:
                 img.image_name = line
                 self.images.append(img)
             else:
-                print image_index
                 self.images[image_index].pixels.append(line.split())
 
 

@@ -1,11 +1,12 @@
 class Image:
-
-
-    pixels = []
+    pixels = None
     image_name = None
 
-    def set_pixel(self,x,y,val):
-        self.pixels[x][y] = val
+    def __init__(self):
+        self.pixels = []
+
 
     def print_pixel_matrix(self):
-        print self.pixels
+        print self.image_name
+        for line in self.pixels:
+            print line
