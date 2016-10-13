@@ -15,10 +15,22 @@ def main(image_file=None, facit_file=None):
         print "Plz provide an image file"
 
     perceptrons = []
-    perceptrons.append(Perceptron())
+    happy_perceptron = Perceptron()
+    sad_perceptron = Perceptron()
+    mischievous_perceptron = Perceptron()
+    mad_perceptron = Perceptron()
+
+    perceptrons.append(happy_perceptron)
+    perceptrons.append(sad_perceptron)
+    perceptrons.append(mischievous_perceptron)
+    perceptrons.append(mad_perceptron)
+
+
 
     for img in image_reader.images:
-        perceptrons[0].train_perceptron(img)
+       print perceptrons[0].fire_perceptron(img)
+
+
 
 
 if __name__ == '__main__':
