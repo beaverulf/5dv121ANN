@@ -23,7 +23,7 @@ class ImageReader:
             if line.startswith('#') or len(line) <= 1:
                 continue
             if line.startswith("Image"):
-                self.images[image_index].image_facit = line.split()[1]
+                self.images[image_index].image_facit = int(line.split()[1])
                 image_index += 1
 
 
