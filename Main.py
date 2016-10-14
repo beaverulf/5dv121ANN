@@ -30,7 +30,7 @@ def main(image_file=None, facit_file=None):
 
     #Training the perceptron
     random.shuffle(images)
-    for i in range(0, 14):
+    for i in range(0, 20):
         for perceptron in perceptrons:
             for k in range(0,200):
                 perceptron.train_perceptron(images[k])
