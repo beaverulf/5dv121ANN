@@ -1,4 +1,5 @@
 import sys
+import random
 
 from Perceptron import Perceptron
 from ImageReader import ImageReader
@@ -28,24 +29,24 @@ def main(image_file=None, facit_file=None):
     perceptrons.append(mad_perceptron)
 
     #Training the perceptron
-    for i in range(0,3):
+    random.shuffle(images)
+    for i in range(0, 14):
         for perceptron in perceptrons:
             for k in range(0,200):
                 perceptron.train_perceptron(images[k])
+
     ####################################
 
     #########TESTING PERCEPTRONS########
     correct = 0.0
-    for i in range(200,299):
-        init_diff = 1.0
+    for i in range(0,100):
+        curr_max = 0.0
         answer_face = 0
         for perceptron in perceptrons:
             activation = perceptron.fire_perceptron(images[i])
-            act_diff = 1 - activation
-            if act_diff <= init_diff:
-                init_diff = act_diff
+            if activation > curr_max:
+                curr_max = activation
                 answer_face = perceptron.face_facit
-        print answer_face , images[i].image_facit
 
         if images[i].image_facit == answer_face:
             correct += 1

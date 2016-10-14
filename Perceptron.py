@@ -9,7 +9,7 @@ class Perceptron:
         self.cons_limit = 3
 
         # learning rate
-        self.alpha = 0.02
+        self.alpha = 0.06
 
         # the weights of each link
         self.weights = []
@@ -21,14 +21,15 @@ class Perceptron:
         for i in range(0,20) :
             self.weights.append([])
             for j in range(0,20):
-                self.weights[i].append(random.random())
+                self.weights[i].append(0)
 
     def fire_perceptron(self, image):
         sum = 0.0
         for j in range(0, 20):
             for i in range(0, 20):
                 sum += (float(image.pixels[j][i]) / 31) * self.weights[j][i]
-        return self.sigmoid(sum)
+        sum = sum / (20*20)
+        return self.activation_func(sum)
 
 
     def compute_error(self,image,activation):
@@ -59,6 +60,7 @@ class Perceptron:
             self.cons_counter = 0
         return error
 
-    def sigmoid(self,x):
-        return 1 / (1 + math.exp(-x))
+    def activation_func(self, x):
+        #return 1 / (1 + math.exp(-x))
+        return math.tanh(x)
 
