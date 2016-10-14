@@ -30,7 +30,7 @@ def main(image_file=None, facit_file=None):
 
     #Training the perceptron
     random.shuffle(images)
-    for i in range(0, 20):
+    for i in range(0, 50):
         for perceptron in perceptrons:
             for k in range(0,200):
                 perceptron.train_perceptron(images[k])
@@ -39,7 +39,7 @@ def main(image_file=None, facit_file=None):
 
     #########TESTING PERCEPTRONS########
     correct = 0.0
-    for i in range(0,100):
+    for i in range(200,300):
         curr_max = 0.0
         answer_face = 0
         for perceptron in perceptrons:
@@ -50,9 +50,6 @@ def main(image_file=None, facit_file=None):
 
         if images[i].image_facit == answer_face:
             correct += 1
-        #print images[i].image_name, activation
-        #print "########################################"
-            #if (1 - activation) <= 0.2:
     print correct/100
 
 

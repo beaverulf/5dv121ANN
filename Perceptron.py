@@ -9,7 +9,7 @@ class Perceptron:
         self.cons_limit = 3
 
         # learning rate
-        self.alpha = 0.03
+        self.alpha = 0.15
 
         # the weights of each link
         self.weights = []
@@ -28,7 +28,6 @@ class Perceptron:
         for j in range(0, 20):
             for i in range(0, 20):
                 sum += (float(image.pixels[j][i]) / 31) * self.weights[j][i]
-        sum = sum / (20*20)
         return self.activation_func(sum)
 
 
@@ -43,7 +42,7 @@ class Perceptron:
     def adjust_weights(self,error,image):
         for j in range(0,20) :
             for i in range(0,20):
-                self.weights[j][i] = self.weights[j][i] + self.alpha*error*(float(image.pixels[j][i])/31)
+                self.weights[j][i] += self.alpha*error*(float(image.pixels[j][i])/31)
 
     # Training algorithm for perceptron
     def train_perceptron(self, image):
@@ -61,6 +60,5 @@ class Perceptron:
         return error
 
     def activation_func(self, x):
-        #return 1 / (1 + math.exp(-x))
-        return math.tanh(x)
+        return 1 / (1 + math.exp(-x))
 
