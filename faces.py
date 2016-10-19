@@ -29,25 +29,17 @@ def main(image_file=None, facit_file=None,test_file=None):
     perceptrons.append(mischievous_perceptron)
     perceptrons.append(mad_perceptron)
 
-    #Initiates the errors
-    last_errors = []
-    last_errors.append(1)
-    last_errors.append(1)
-    last_errors.append(1)
-    last_errors.append(1)
-
     #Training the perceptron
     train = True
-
-    random.shuffle(images)
     loops = 0
     while(train == True):
+       random.shuffle(images)
        for perceptron in perceptrons:
             for k in range(0, len(images)):
-                last_errors[perceptron.face_facit - 1] = perceptron.train_perceptron(images[k])
+                perceptron.train_perceptron(images[k])
        train = False
-       for last_error in last_errors:
-           if last_error > 0.05 or loops < 16:
+       for perceptron in perceptrons:
+           if perceptron.cons_counter < 2 or loops < 16:
                train = True
        loops = loops + 1
     ####################################
@@ -68,7 +60,7 @@ def main(image_file=None, facit_file=None,test_file=None):
     ####################################
 
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 3 or len(sys.argv) > 4:
         print "faces.py training-file.txt training-facit.txt test-file.txt"
     else:
         main(sys.argv[1],sys.argv[2], sys.argv[3])

@@ -8,12 +8,12 @@ import math
 class Perceptron:
 
     def __init__(self, facit_value):
-        self.consecutive_error_bound = 0.1
+        self.consecutive_error_bound = 0.07
         self.cons_counter = 0
         self.cons_limit = 3
 
         # learning rate
-        self.alpha = 0.2
+        self.alpha = 0.05
 
         # the weights of each link
         self.weights = []
