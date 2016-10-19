@@ -4,19 +4,20 @@ import random
 from Perceptron import Perceptron
 from ImageReader import ImageReader
 
-def main(image_file=None, facit_file=None):
+def main(image_file=None, facit_file=None,test_file=None):
 
     image_reader = ImageReader()
 
-    if image_file is not None:
+    if image_file and facit_file and test_file is not None:
         image_reader.parse_image_file(image_file)
-    if facit_file and image_file is not None:
         image_reader.parse_facit_file(facit_file)
+        image_reader.parse_test_file(test_file)
     else:
-        print "Plz provide an image file"
+        print "faces.py training-file.txt training-facit.txt test-file.txt"
 
     images = image_reader.images
 
+    # Initiates the perceptrons
     perceptrons = []
     happy_perceptron = Perceptron(1)
     sad_perceptron = Perceptron(2)
@@ -28,34 +29,46 @@ def main(image_file=None, facit_file=None):
     perceptrons.append(mischievous_perceptron)
     perceptrons.append(mad_perceptron)
 
-    #Training the perceptron
-    random.shuffle(images)
-    for i in range(0, 50):
-        for perceptron in perceptrons:
-            for k in range(0,200):
-                perceptron.train_perceptron(images[k])
+    #Initiates the errors
+    last_errors = []
+    last_errors.append(1)
+    last_errors.append(1)
+    last_errors.append(1)
+    last_errors.append(1)
 
+    #Training the perceptron
+    train = True
+
+    random.shuffle(images)
+    loops = 0
+    while(train == True):
+       for perceptron in perceptrons:
+            for k in range(0, len(images)):
+                last_errors[perceptron.face_facit - 1] = perceptron.train_perceptron(images[k])
+       train = False
+       for last_error in last_errors:
+           if last_error > 0.05 or loops < 16:
+               train = True
+       loops = loops + 1
     ####################################
 
     #########TESTING PERCEPTRONS########
-    correct = 0.0
-    for i in range(200,300):
+    test = image_reader.test
+    for i in range(0,len(test)):
         curr_max = 0.0
         answer_face = 0
         for perceptron in perceptrons:
-            activation = perceptron.fire_perceptron(images[i])
+            activation = perceptron.fire_perceptron(test[i])
             if activation > curr_max:
                 curr_max = activation
                 answer_face = perceptron.face_facit
-
-        if images[i].image_facit == answer_face:
-            correct += 1
-    print correct/100
-
+        print 'Image' +  str(i + 1), answer_face
+    print '#loops ', loops
 
     ####################################
 
-
-
 if __name__ == '__main__':
-    main(sys.argv[1],sys.argv[2])
+    if len(sys.argv) < 3:
+        print "faces.py training-file.txt training-facit.txt test-file.txt"
+    else:
+        main(sys.argv[1],sys.argv[2], sys.argv[3])

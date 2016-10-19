@@ -1,3 +1,6 @@
+"""
+Represents an Image
+"""
 class Image:
 
     def __init__(self):
